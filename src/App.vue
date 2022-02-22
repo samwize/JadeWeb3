@@ -5,6 +5,9 @@ import HelloWorld from './components/HelloWorld.vue'
 </script>
 
 <template>
+  <h1 class="text-3xl font-bold underline">
+    Hello tailwind!
+  </h1>
   <img alt="Vue logo" src="./assets/logo.png" />
   <HelloWorld msg="Hello Vue 3 + Vite" />
 </template>
