@@ -1,8 +1,11 @@
 <script setup>
-import PrimaryButton from './PrimaryButton.vue';
+import HelloWorld from '/src/uikit/HelloWorld.vue';
+import PrimaryButton from '/src/uikit/PrimaryButton.vue';
 </script>
 
-<template>    
+<template>
+  <HelloWorld msg="Hello Vue 3 + Vite" />
+
   <h1 class="text-3xl font-bold underline pt-10">
     Hello tailwind!
   </h1>

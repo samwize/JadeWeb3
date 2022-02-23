@@ -12,8 +12,7 @@ const count = ref(0)
 <template>
   <h1>{{ msg }}</h1>
 
-  <PrimaryButton @click="count++">count is: {{ count }}</PrimaryButton>
-  
+  <PrimaryButton @click="count++">count is: {{ count }}</PrimaryButton>  
 </template>
 
 <style scoped>
