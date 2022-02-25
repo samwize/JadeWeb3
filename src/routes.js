@@ -5,6 +5,16 @@ export default [
         component: () => import('./components/PageHome.vue'),
     },
     {
+        name: 'Published',
+        path: '/published',
+        component: () => import('./components/PageHome.vue'),
+    },
+    {
+        name: 'Drafts',
+        path: '/drafts',
+        component: () => import('./components/PageHome.vue'),
+    },
+    {
         name: 'Test',
         path: '/test',
         component: () => import('./components/PageTest.vue'),
