@@ -1,12 +1,9 @@
 <script setup>
-import HelloWorld from '/src/uikit/HelloWorld.vue';
 import PrimaryButton from '/src/uikit/PrimaryButton.vue';
 import { ArchiveIcon } from '@heroicons/vue/solid'
 </script>
 
 <template>
-  <HelloWorld msg="Hello Vue 3 + Vite" />
-
   <h1 class="text-3xl font-bold underline pt-10">Hello tailwind!</h1>
 
   <div class="flex-1 items-center">
