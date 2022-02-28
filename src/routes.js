@@ -12,7 +12,7 @@ export default [
     {
         name: 'Drafts',
         path: '/drafts',
-        component: () => import('./components/PageHome.vue'),
+        component: () => import('./components/PageDrafts.vue'),
     },
     {
         name: 'Test',
