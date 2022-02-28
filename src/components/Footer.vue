@@ -1,5 +1,5 @@
 <template>
-<footer class="mt-8 p-4 bg-white rounded-lg shadow md:flex md:items-center md:justify-between md:p-6 dark:bg-gray-800 container mx-auto">
+<footer class="mt-8 p-4 bg-white rounded-lg shadow-inner md:flex md:items-center md:justify-between md:p-6 dark:bg-gray-800 container mx-auto">
     <span class="text-sm text-gray-500 sm:text-center dark:text-gray-400">© <a href="https://jade2us.com" class="hover:underline" target="_blank">Jade2us</a> 2022
     </span>
     <ul class="flex flex-wrap items-center mt-3 sm:mt-0">
