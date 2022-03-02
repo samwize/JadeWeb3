@@ -12,8 +12,5 @@
     <p class="mb-5 text-base text-gray-500 sm:text-lg dark:text-gray-400">
         Concern over data privacy? Don't worry, your data is fully encrypted on the blockchain (including photos). Only your wallet private keys can decrypt the data.
     </p>
-    <div class="justify-center items-center space-y-4 sm:flex sm:space-y-0 sm:space-x-4">
-        
-    </div>
 </div>
 </template>
