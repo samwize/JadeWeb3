@@ -11,11 +11,18 @@ let entryPlaceholder = "Sup? Write your journal entry here";
 const draft = ref(new Entry());
 
 onMounted(() => {
-    console.log("Mounted");
     loadStore();
     draft.value = getDraft();
-    console.log("Draft", draft);
 })
+
+function deleteDraft() {
+    draft.value.date = Date();
+    draft.value.content = null;
+}
+
+function publishDraft() {
+
+}
 
 </script>
 
@@ -29,9 +36,9 @@ onMounted(() => {
             <input class="flex-1 block text-sm text-gray-900 bg-gray-50 rounded-lg cursor-pointer dark:text-gray-400 focus:outline-none focus:border-transparent dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" id="photo" type="file">
             
             <div class="ml-4">
-                <DestructiveButton>Delete</DestructiveButton>
-                <PrimaryButton @click="saveStore" >Save Draft</PrimaryButton>
-                <PrimaryButton>Publish</PrimaryButton>
+                <DestructiveButton @click="deleteDraft">Delete</DestructiveButton>
+                <PrimaryButton @click="saveStore">Save Draft</PrimaryButton>
+                <PrimaryButton @click="publishDraft">Publish</PrimaryButton>
             </div>
         </div>
 

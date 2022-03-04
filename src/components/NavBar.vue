@@ -14,21 +14,24 @@ const navRoutes = [
     },
 ]
 
-import { onMounted } from '@vue/runtime-core';
-import Arweave from 'arweave';
-const arweave = Arweave.init({});
+import { computed, onMounted } from '@vue/runtime-core';
+import * as ArweaveKit from '/src/utils/arweavekit.js'
 
-onMounted(async () => {
-    // Need a timeout if not no active address. Is there an event?
-    setTimeout(() => {
-        getWalletAddress();
+onMounted(() => {
+    // Need a timeout while window.arweaveWallet loads. Is there an event?
+    setTimeout(async () => {
+        let addr = await ArweaveKit.getWalletAddress();
+        let balance = await ArweaveKit.getBalanceAR(addr);
     }, 3000);
 });
 
-async function getWalletAddress() {
-    let addr = await arweave.wallets.getAddress();
-    console.log(addr);
-}
+const shortAddress = computed(() => {
+    if (ArweaveKit.address.value == null) {
+        return ""
+    }
+    let v = ArweaveKit.address.value;
+    return [v.slice(0,3), v.slice(-3)].join("...");
+})
 
 </script>
 
@@ -42,7 +45,9 @@ async function getWalletAddress() {
         </span>
     </router-link>
   <div class="flex md:order-2">
-      <button @click="test2" type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-3 md:mr-0 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Wallet</button>
+      <button v-if="ArweaveKit.address.value != null" @click="walletLogin" type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-3 md:mr-0 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">{{ shortAddress }}</button>
+      <button v-else @click="walletLogin" type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-3 md:mr-0 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Wallet</button>
+
       <button data-collapse-toggle="mobile-menu-4" type="button" class="inline-flex items-center p-2 text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600" aria-controls="mobile-menu-4" aria-expanded="false">
       <span class="sr-only">Open main menu</span>
       <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd"></path></svg>
