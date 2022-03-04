@@ -1,6 +1,43 @@
 <script setup>
 import PrimaryButton from '/src/uikit/PrimaryButton.vue';
-import { ArchiveIcon } from '@heroicons/vue/solid'
+import { ArchiveIcon } from '@heroicons/vue/solid';
+import Arweave from 'arweave';
+const arweave = Arweave.init({});
+
+// Log the balances
+let addr = 'VGzC9fXmqcQ3kzQERemI4Fue1u2mccC2eFrm8Fc-Y5U';
+arweave.wallets.getBalance(addr).then((balance) => {
+    let winston = balance;
+    let ar = arweave.ar.winstonToAr(balance);
+    console.log("winston", winston);
+    console.log("AR", ar);
+});
+
+async function test() {
+  // The transaction
+  let buf = Arweave.utils.stringToBuffer('Some data');
+  let transaction = await arweave.createTransaction({
+      data: buf
+  });
+
+  // Tags
+  transaction.addTag('DataType', 'entry');
+  transaction.addTag('Algo', 'RSA');
+  transaction.addTag('Keys', 'x,y,z');
+  transaction.addTag('Wallets', 'x1,y1,z1');
+  console.log(transaction);
+
+  // Sign it
+  // await arweave.transactions.sign(transaction);
+
+  // // Upload
+  // let uploader = await arweave.transactions.getUploader(transaction);
+  // while (!uploader.isComplete) {
+  //   await uploader.uploadChunk();
+  //   console.log(`${uploader.pctComplete}% complete, ${uploader.uploadedChunks}/${uploader.totalChunks}`);
+  // }
+}
+
 </script>
 
 <template>
@@ -15,7 +52,7 @@ import { ArchiveIcon } from '@heroicons/vue/solid'
     </div>
   </div>
 
-  <PrimaryButton>I am a button</PrimaryButton>
+  <PrimaryButton @click="test">I am a button</PrimaryButton>
 
   <blockquote class="text-2xl font-semibold italic text-center text-slate-900">
     When you look

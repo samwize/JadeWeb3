@@ -12,5 +12,11 @@
     <p class="mb-5 text-base text-gray-500 sm:text-lg dark:text-gray-400">
         Concern over data privacy? Don't worry, your data is fully encrypted on the blockchain (including photos). Only your wallet private keys can decrypt the data.
     </p>
+    <h3 class="mb-2 text-3xl font-bold text-gray-900 dark:text-white">
+        Get Started
+    </h3>
+    <p class="mb-5 text-base text-gray-500 sm:text-lg dark:text-gray-400">
+        Install <a class="text-blue-600" href='https://www.arconnect.io/'>ArConnect</a> and setup your Arweave wallet. You need AR tokens to publish.
+    </p>
 </div>
 </template>
