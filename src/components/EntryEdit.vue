@@ -23,8 +23,11 @@ function deleteDraft() {
 }
 
 function publishDraft() {
-    ArweaveKit.publish(draft.value);
-    // deleteDraft();
+    ArweaveKit.publish(draft.value).then(ok => {
+        if (ok) {
+            deleteDraft();
+        }
+    });    
 }
 
 </script>
@@ -45,5 +48,8 @@ function publishDraft() {
             </div>
         </div>
 
+        <div class="container mx-auto px-2">
+            <p class="float-right text-right">{{ ArweaveKit.txnStatus.value }}</p>
+        </div>
     </div>
 </template>

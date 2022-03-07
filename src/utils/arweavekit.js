@@ -4,7 +4,8 @@ import { ref } from 'vue';
 
 const arweave = Arweave.init({});
 
-export const address = ref(null)
+export const address = ref(null);
+export const txnStatus = ref("");
 
 export async function connect() {
     return await window.arweaveWallet.connect(
@@ -42,32 +43,37 @@ let encryptOptions = {
 
 export async function publish(entry) {
     console.log("Publishing..", entry);
+    txnStatus.value = "Publishing to Arweave..";
     
-    connect().then(() => {
-        window.arweaveWallet.encrypt(entry.content, encryptOptions).then((data) => {
-            // console.log(data);
-            // decrypt(data);
-            sendEntryTransaction(data, entry.date, address.value);
-        })
-    })
+    return connect().then(() => {
+        return window.arweaveWallet.encrypt(entry.content, encryptOptions)
+    }).then(data => {
+        // console.log(data);
+        // decrypt(data);
+        return sendEntryTransaction(data, entry.date, address.value);
+    }).then(ok => {
+        return Promise.resolve(ok);
+    });
 }
 
 export async function decrypt(data) {
-    connect().then(() => {
-        window.arweaveWallet.decrypt(data, encryptOptions).then((decryptedData) => {
-            console.log(decryptedData);
-            console.log("Decoded:", decryptedData);
-        });
+    window.arweaveWallet.decrypt(data, encryptOptions).then(decryptedData => {
+        console.log(decryptedData);
+        console.log("Decoded:", decryptedData);
     });
 }
 
 export async function sendEntryTransaction(data, entryDate, ownerAddress) {
-    // The transaction
+    // Test without signing and sending
+    // setTimeout(() => {
+    //     txnStatus.value = "Published successfully!";
+    // }, 3000);
+    // return Promise.resolve(true);
+    
+    // Create the transaction and tags
     let transaction = await arweave.createTransaction({
         data: data
     });
-  
-    // Tags
     transaction.addTag('Scheme', '0.1'); // Algo RSA, user pub key
     transaction.addTag('DataType', 'entry');
     transaction.addTag('Date', entryDate);
@@ -77,6 +83,7 @@ export async function sendEntryTransaction(data, entryDate, ownerAddress) {
     transaction.addTag('Wallets', wallets.join(","));
     console.log(transaction);
     
+    // Tags need to decode
     // transaction.get('tags').forEach(tag => {
     //     let key = tag.get('name', {decode: true, string: true});
     //     let value = tag.get('value', {decode: true, string: true});
@@ -90,8 +97,16 @@ export async function sendEntryTransaction(data, entryDate, ownerAddress) {
     // Upload
     let uploader = await arweave.transactions.getUploader(transaction);
     while (!uploader.isComplete) {
-      await uploader.uploadChunk();
-      console.log(`${uploader.pctComplete}% complete, ${uploader.uploadedChunks}/${uploader.totalChunks}`);
+        await uploader.uploadChunk();
+        console.log(`${uploader.pctComplete}% complete, ${uploader.uploadedChunks}/${uploader.totalChunks}`);
+        txnStatus.value = "Published successfully!";
+
+        // Reset
+        setTimeout(() => {
+            txnStatus.value = null;
+        }, 7000);
+
+        return Promise.resolve(true);
     }
 }
   

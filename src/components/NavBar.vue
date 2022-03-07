@@ -8,10 +8,10 @@ const navRoutes = [
         name: "Drafts",
         path: "/drafts",
     },
-    {
-        name: "Test",
-        path: "/test",
-    },
+    // {
+    //     name: "Test",
+    //     path: "/test",
+    // },
 ]
 
 import { computed, onMounted } from '@vue/runtime-core';
