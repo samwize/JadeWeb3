@@ -5,6 +5,7 @@ import 'vue3-date-time-picker/dist/main.css';
 import PrimaryButton from '/src/uikit/PrimaryButton.vue';
 import DestructiveButton from '/src/uikit/DestructiveButton.vue';
 import { store, getDraft, loadStore, saveStore, Entry } from '/src/store.js'
+import * as ArweaveKit from '/src/utils/arweavekit.js'
 
 let entryPlaceholder = "Sup? Write your journal entry here";
 
@@ -18,10 +19,12 @@ onMounted(() => {
 function deleteDraft() {
     draft.value.date = Date();
     draft.value.content = null;
+    saveStore();
 }
 
 function publishDraft() {
-
+    ArweaveKit.publish(draft.value);
+    // deleteDraft();
 }
 
 </script>

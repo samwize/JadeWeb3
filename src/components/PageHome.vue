@@ -16,7 +16,7 @@
         Get Started
     </h3>
     <p class="mb-5 text-base text-gray-500 sm:text-lg dark:text-gray-400">
-        Install <a class="text-blue-600" href='https://www.arconnect.io/'>ArConnect</a> and setup your Arweave wallet. You need AR tokens to publish.
+        Install <a class="text-blue-600" href='https://www.arconnect.io/' target="_blank">ArConnect</a> and setup your Arweave wallet. You need AR tokens to publish.
     </p>
 </div>
 </template>

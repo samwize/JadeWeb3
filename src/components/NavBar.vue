@@ -33,6 +33,10 @@ const shortAddress = computed(() => {
     return [v.slice(0,3), v.slice(-3)].join("...");
 })
 
+function walletLogin() {
+    ArweaveKit.connect();
+}
+
 </script>
 
 <template>
