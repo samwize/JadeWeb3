@@ -1,6 +1,10 @@
 <script setup>
 const navRoutes = [
     {
+        name: "Home",
+        path: "/",
+    },
+    {
         name: "Published",
         path: "/published",
     },
@@ -19,9 +23,11 @@ import * as ArweaveKit from '/src/utils/arweavekit.js'
 
 onMounted(() => {
     // Need a timeout while window.arweaveWallet loads. Is there an event?
+    // We use this as a refresh to update stuff
     setTimeout(async () => {
-        let addr = await ArweaveKit.getWalletAddress();
-        let balance = await ArweaveKit.getBalanceAR(addr);
+        await ArweaveKit.getWalletAddress();
+        ArweaveKit.getBalanceAR();
+        ArweaveKit.fetchTransactions();
     }, 3000);
 });
 

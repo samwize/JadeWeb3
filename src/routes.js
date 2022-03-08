@@ -7,7 +7,7 @@ export default [
     {
         name: 'Published',
         path: '/published',
-        component: () => import('./components/PageHome.vue'),
+        component: () => import('./components/PagePublished.vue'),
     },
     {
         name: 'Drafts',

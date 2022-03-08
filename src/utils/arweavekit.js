@@ -15,7 +15,9 @@ export async function connect() {
             logo: "https://jade2us.com/images/jade-icon-100.png"
         }
     ).then(() => {
-        getWalletAddress();
+        getWalletAddress().then(() => {
+            fetchTransactions();
+        });
     });
 }
 
@@ -26,8 +28,8 @@ export async function getWalletAddress() {
     return Promise.resolve(addr);
 }
 
-export async function getBalanceAR(addr) {
-    arweave.wallets.getBalance(addr).then((balance) => {
+export async function getBalanceAR() {
+    arweave.wallets.getBalance(address.value).then((balance) => {
         let winston = balance;
         let ar = arweave.ar.winstonToAr(balance);
         console.log("Balance (winston):", winston);
@@ -108,5 +110,49 @@ export async function sendEntryTransaction(data, entryDate, ownerAddress) {
 
         return Promise.resolve(true);
     }
+}
+
+// Returns the GraphQL query for filtering tag "Wallets"
+function getQuery(walletAddress) {
+    return `query {
+        transactions(
+            tags: [
+              {
+                name: "Wallets",
+                values: ["${walletAddress}"]
+              },
+              {
+                name: "DataType",
+                values: ["entry"]
+              },
+            ]
+        ) {
+            edges {
+                node {
+                    id
+                }
+            }
+        }
+    }`;
+}
+
+export async function fetchTransactions() {
+    console.log("fetchTransactions");
+    let q = getQuery(address.value);
+    let payload = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+        },
+        body: JSON.stringify({query: q})
+    }
+
+    fetch('https://arweave.net/graphql', payload)
+        .then(r => r.json())
+        .then(d => d.data.transactions.edges.map(edge => edge.node.id))
+        .then(txnIds => {
+            console.log(txnIds);
+        });
 }
   
