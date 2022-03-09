@@ -1,7 +1,7 @@
-import { reactive } from 'vue'
+import { computed, reactive } from 'vue'
 
 export const store = reactive({
-  published: [],
+  published: {},
   drafts: [],
 })
 
@@ -44,6 +44,8 @@ export function addNewDraft() {
     return draft;
 }
 
+const dateFormatOptions = { year: 'numeric', month: 'short', day: 'numeric' };
+
 export class Entry {
     constructor(date, content) {
         if (date == null) {
@@ -53,5 +55,16 @@ export class Entry {
         }
         
         this.content = content;
+    }
+
+    get shortDate() {
+        return this.date.toLocaleDateString(undefined, dateFormatOptions);
+    }
+}
+
+export function addPublished(txnId, entry) {
+    if (store.published[txnId] == null) {
+        store.published[txnId] = entry;
+        console.log("Added to published", entry);
     }
 }

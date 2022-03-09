@@ -1,5 +1,5 @@
 import Arweave from 'arweave';
-import { Entry } from '/src/store.js'
+import { Entry, addPublished } from '/src/store.js'
 import { ref } from 'vue';
 
 const arweave = Arweave.init({});
@@ -59,9 +59,8 @@ export async function publish(entry) {
 }
 
 export async function decrypt(data) {
-    window.arweaveWallet.decrypt(data, encryptOptions).then(decryptedData => {
-        console.log(decryptedData);
-        console.log("Decoded:", decryptedData);
+    return window.arweaveWallet.decrypt(data, encryptOptions).then(decryptedData => {
+        return Promise.resolve(decryptedData);
     });
 }
 
@@ -153,6 +152,25 @@ export async function fetchTransactions() {
         .then(d => d.data.transactions.edges.map(edge => edge.node.id))
         .then(txnIds => {
             console.log(txnIds);
+            txnIds.forEach(txnId => {
+                console.log("Getting txn", txnId);
+                arweave.transactions.get(txnId).then( txn => {
+                    console.log("Got the txn", txn);
+                    let entryDate = null
+                    txn.get('tags').forEach(tag => {
+                        let key = tag.get('name', {decode: true, string: true});
+                        if (key == "Date") {
+                            let value = tag.get('value', {decode: true, string: true});
+                            entryDate = value;
+                        }
+                    });
+                    console.log("entryDate", entryDate);
+                    
+                    decrypt(txn.data).then( decryptedData => {
+                        addPublished(txnId, new Entry(entryDate, decryptedData))
+                    });
+                });
+            });
         });
 }
   
