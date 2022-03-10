@@ -13,14 +13,13 @@ export function resetStore() {
 let stateKey = 'state'
 
 export function saveStore() {
-    console.log(getDraft());
-    console.log(store);
+    console.log("Saving store", store);
     localStorage.setItem(stateKey, JSON.stringify(store));
 }
 
 export function loadStore() {
     let localState = JSON.parse(localStorage.getItem(stateKey));
-    console.log(localState);
+    console.log("Loading store", localState);
     if (localState == null) {
         store.published = [];
         store.drafts = [];
@@ -65,6 +64,6 @@ export class Entry {
 export function addPublished(txnId, entry) {
     if (store.published[txnId] == null) {
         store.published[txnId] = entry;
-        console.log("Added to published", entry);
+        saveStore();
     }
 }

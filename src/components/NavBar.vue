@@ -19,9 +19,12 @@ const navRoutes = [
 ]
 
 import { computed, onMounted } from '@vue/runtime-core';
+import { loadStore } from '/src/store.js';
 import * as ArweaveKit from '/src/utils/arweavekit.js'
 
 onMounted(() => {
+    loadStore();
+
     // Need a timeout while window.arweaveWallet loads. Is there an event?
     // We use this as a refresh to update stuff
     setTimeout(async () => {

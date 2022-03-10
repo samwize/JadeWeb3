@@ -4,7 +4,7 @@ import Datepicker from 'vue3-date-time-picker';
 import 'vue3-date-time-picker/dist/main.css';
 import PrimaryButton from '/src/uikit/PrimaryButton.vue';
 import DestructiveButton from '/src/uikit/DestructiveButton.vue';
-import { store, getDraft, loadStore, saveStore, Entry } from '/src/store.js'
+import { store, getDraft, saveStore, Entry } from '/src/store.js'
 import * as ArweaveKit from '/src/utils/arweavekit.js'
 
 let entryPlaceholder = "Sup? Write your journal entry here";
@@ -12,7 +12,6 @@ let entryPlaceholder = "Sup? Write your journal entry here";
 const draft = ref(new Entry());
 
 onMounted(() => {
-    loadStore();
     draft.value = getDraft();
 })
 
