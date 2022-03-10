@@ -82,7 +82,7 @@ export async function sendEntryTransaction(data, entryDate, ownerAddress) {
     // transaction.addTag('Keys', 'x,y,z');
     let wallets = [ownerAddress];
     transaction.addTag('Wallets', wallets.join(","));
-    console.log(transaction);
+    console.log("Txn", transaction);
     
     // Tags need to decode
     // transaction.get('tags').forEach(tag => {
@@ -93,7 +93,7 @@ export async function sendEntryTransaction(data, entryDate, ownerAddress) {
 
     // Sign it
     await arweave.transactions.sign(transaction);
-    console.log(transaction);
+    console.log("Signed", transaction);
     
     // Upload
     let uploader = await arweave.transactions.getUploader(transaction);
