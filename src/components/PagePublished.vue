@@ -3,7 +3,7 @@
 import { onMounted, computed } from "@vue/runtime-core";
 import * as ArweaveKit from '/src/utils/arweavekit.js';
 import { store, Entry } from '/src/store.js';
-import { RefreshIcon } from '@heroicons/vue/outline';
+import { RefreshIcon, LightningBoltIcon } from '@heroicons/vue/outline';
 
 onMounted(() => {
     // ArweaveKit.fetchTransactions()
@@ -15,6 +15,10 @@ onMounted(() => {
 // });
 
 function refresh() {
+    ArweaveKit.fetchTransactions()
+}
+
+function test() {
     console.log(store);
     store.published["mock"] = new Entry(null, "Mocking a new entry", ["https://cryptoinvesting.art/img/wormhole-space.jpeg"]);
 }
@@ -32,5 +36,6 @@ function refresh() {
     </a>
 
     <RefreshIcon @click="refresh" class="w-6 float-right cursor-pointer text-slate-600"/>
+    <LightningBoltIcon @click="test" class="w-6 mx-4 float-right cursor-pointer text-slate-600"/>
 </div>
 </template>
