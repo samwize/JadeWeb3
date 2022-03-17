@@ -49,7 +49,7 @@ export async function publish(entry) {
     txnStatus.value = "Publishing to Arweave..";
 
     const jsonData = {
-        data: entry.content,
+        content: entry.content,
         photos: entry.photos
     };
     const json = JSON.stringify(jsonData);
@@ -83,7 +83,7 @@ export async function sendEntryTransaction(data, entryDate, ownerAddress) {
     let transaction = await arweave.createTransaction({
         data: data
     });
-    transaction.addTag('Scheme', '0.2'); // Algo RSA, user pub key
+    transaction.addTag('Schema', '0.2'); // Algo RSA, user pub key
     transaction.addTag('DataType', 'entry');
     transaction.addTag('Date', entryDate);
     // transaction.addTag('Algo', 'RSA');
@@ -162,24 +162,36 @@ export async function fetchTransactions() {
         .then(r => r.json())
         .then(d => d.data.transactions.edges.map(edge => edge.node.id))
         .then(txnIds => {
-            console.log(txnIds);
+            console.log("txnIds", txnIds);
             txnIds.forEach(txnId => {
                 console.log("Getting txn", txnId);
                 arweave.transactions.get(txnId).then( txn => {
                     console.log("Got the txn", txn);
-                    let entryDate = null
+                    let entryDate = null;
+                    let schemaVersion = null;
                     txn.get('tags').forEach(tag => {
                         let key = tag.get('name', {decode: true, string: true});
-                        if (key == "Date") {
-                            let value = tag.get('value', {decode: true, string: true});
-                            entryDate = value;
+                        let value = tag.get('value', {decode: true, string: true});
+                        switch (key) {
+                            case "Date": entryDate = new Date(value); break;
+                            case "Scheme": schemaVersion = value; break;
+                            case "Schema": schemaVersion = value; break;
+                            default: break;
                         }
                     });
                     console.log("entryDate", entryDate);
                     
                     decrypt(txn.data).then( decryptedData => {
-                        addPublished(txnId, new Entry(entryDate, decryptedData))
+                        if (schemaVersion == "0.1") {
+                            addPublished(txnId, new Entry(entryDate, decryptedData));
+                        } else if (schemaVersion == "0.2") {
+                            const content = decryptedData.data; // Typo key
+                            addPublished(txnId, new Entry(entryDate, content, decryptedData.photos));
+                        }
+                        // addPublished(txnId, new Entry(entryDate, decryptedData.content, decryptedData.photos));
                     });
+                }).catch( error => {
+                    console.log("Error fetching txn", error);
                 });
             });
         });

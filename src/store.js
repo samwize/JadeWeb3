@@ -6,7 +6,7 @@ export const store = reactive({
 })
 
 export function resetStore() {
-    store.published = [];
+    store.published = {};
     store.drafts = [];
 }
 
@@ -19,14 +19,20 @@ export function saveStore() {
 
 export function loadStore() {
     let localState = JSON.parse(localStorage.getItem(stateKey));
-    console.log("Loading store", localState);
     if (localState == null) {
-        store.published = [];
+        store.published = {};
         store.drafts = [];
     } else {
-        store.published = localState.published ?? [];
+        // Recreate the Entry instances
+        store.published = {};
+        for (const txnId in localState.published) {
+            const o = localState.published[txnId];
+            let entry = new Entry(new Date(o.date), o.content, o.photos);
+            store.published[txnId] = entry;
+        }
         store.drafts = localState.drafts ?? [];
     }
+    console.log("Loaded store", store.published);
 }
 
 export function getDraft() {
@@ -62,9 +68,8 @@ export class Entry {
     }
 
     get firstPhoto() {
-        return photos[0];
+        return this.photos[0];
     }
-
 }
 
 export function addPublished(txnId, entry) {

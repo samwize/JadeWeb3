@@ -9,13 +9,14 @@ onMounted(() => {
     // ArweaveKit.fetchTransactions()
 })
 
-const entries = computed(() => {
-    store.published.sort((x, y) => x.date - y.date);
-});
+// unused
+// const entries = computed(() => {
+//     store.published.sort((x, y) => x.date - y.date);
+// });
 
 function refresh() {
     console.log(store);
-    store.published["mock"] = new Entry(null, "Mocking a new entry");
+    store.published["mock"] = new Entry(null, "Mocking a new entry", ["https://cryptoinvesting.art/img/wormhole-space.jpeg"]);
 }
 
 </script>
@@ -23,7 +24,7 @@ function refresh() {
 <template>
 <div class="container mx-auto">
     <a v-for="(entry, index) in store.published" :key="entry.date" class="flex flex-row my-6 items-center bg-white border hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
-        <img class="object-cover max-w-xs md:h-auto" src="https://cryptoinvesting.art/img/wormhole-space.jpeg" alt="">
+        <img class="object-cover max-w-xs md:h-auto" :src="entry.firstPhoto" alt="">
         <div class="flex flex-col text-left p-4 leading-normal">
             <p class="mb-2 font-normal text-gray-600 dark:text-gray-400">{{ entry.shortDate }}</p>
             <p class="text-xl font-light tracking-tight text-gray-900 dark:text-white">{{ entry.content }}</p>
