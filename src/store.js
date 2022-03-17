@@ -46,7 +46,7 @@ export function addNewDraft() {
 const dateFormatOptions = { year: 'numeric', month: 'short', day: 'numeric' };
 
 export class Entry {
-    constructor(date, content) {
+    constructor(date, content, photos) {
         if (date == null) {
             this.date = new Date();
         } else {
@@ -54,11 +54,17 @@ export class Entry {
         }
         
         this.content = content;
+        this.photos = photos ?? [];
     }
 
     get shortDate() {
         return this.date.toLocaleDateString(undefined, dateFormatOptions);
     }
+
+    get firstPhoto() {
+        return photos[0];
+    }
+
 }
 
 export function addPublished(txnId, entry) {

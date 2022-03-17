@@ -20,10 +20,12 @@ onMounted(() => {
 function deleteDraft() {
     draft.value.date = Date();
     draft.value.content = null;
+    draft.value.photos = null;
     saveStore();
 }
 
 function publishDraft() {
+    draft.value.photos = photos;
     ArweaveKit.publish(draft.value).then(ok => {
         if (ok) {
             deleteDraft();
@@ -101,7 +103,7 @@ function handleImages(files){
 
         <textarea id="message" rows="15" class="block p-4 w-full text-lg text-gray-900 bg-gray-50 border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" :placeholder="entryPlaceholder" v-model="draft.content"></textarea>
 
-        <UploadImages class="mt-2" @changed="handleImages" max=4 uploadMsg="Click to upload or drop photos here" />
+        <UploadImages class="mt-2" @changed="handleImages" max=1 uploadMsg="Click to upload or drop photos here" />
 
         <div class="flex mt-4 float-right">
             <div class="ml-4">

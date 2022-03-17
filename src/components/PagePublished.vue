@@ -15,7 +15,7 @@ const entries = computed(() => {
 
 function refresh() {
     console.log(store);
-    store.published["xxx"] = new Entry(null, "Mocking adding a new entry");
+    store.published["mock"] = new Entry(null, "Mocking a new entry");
 }
 
 </script>

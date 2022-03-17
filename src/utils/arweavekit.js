@@ -45,10 +45,18 @@ let encryptOptions = {
 
 export async function publish(entry) {
     console.log("Publishing..", entry);
+    console.log("Photos:", entry.photos.length);
     txnStatus.value = "Publishing to Arweave..";
+
+    const jsonData = {
+        data: entry.content,
+        photos: entry.photos
+    };
+    const json = JSON.stringify(jsonData);
+    // console.log(json);
     
     return connect().then(() => {
-        return window.arweaveWallet.encrypt(entry.content, encryptOptions)
+        return window.arweaveWallet.encrypt(json, encryptOptions)
     }).then(data => {
         // console.log(data);
         // decrypt(data);
@@ -60,7 +68,7 @@ export async function publish(entry) {
 
 export async function decrypt(data) {
     return window.arweaveWallet.decrypt(data, encryptOptions).then(decryptedData => {
-        return Promise.resolve(decryptedData);
+        return Promise.resolve(JSON.parse(decryptedData));
     });
 }
 
@@ -75,7 +83,7 @@ export async function sendEntryTransaction(data, entryDate, ownerAddress) {
     let transaction = await arweave.createTransaction({
         data: data
     });
-    transaction.addTag('Scheme', '0.1'); // Algo RSA, user pub key
+    transaction.addTag('Scheme', '0.2'); // Algo RSA, user pub key
     transaction.addTag('DataType', 'entry');
     transaction.addTag('Date', entryDate);
     // transaction.addTag('Algo', 'RSA');
@@ -90,6 +98,9 @@ export async function sendEntryTransaction(data, entryDate, ownerAddress) {
     //     let value = tag.get('value', {decode: true, string: true});
     //     console.log(`${key} : ${value}`);
     // });
+
+    // WARNING: AR will be spent beyond here!
+    // return;
 
     // Sign it
     await arweave.transactions.sign(transaction);

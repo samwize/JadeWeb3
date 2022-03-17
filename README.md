@@ -20,17 +20,6 @@ It is a lesson.
 
 Hopefully a decentralized blockchain is much stronger for [Kate](https://just2me.com/2015/08/18/baby-kate-is-born/) & [Jade](https://just2me.com/2020/01/09/baby-jade-is-born/) journals.
 
-## Entry Schema (v0.1)
+## Schema
 
-Each journal entry is stored as a transaction in Arweave. This is the design. Any developer can create apps to read the entries. 
-
-The data in the transaction is encrypted with RSA asymmetric cryptography, such that only the user with the wallet (private key) can decrypt. Specifically, the algorithm is RSA-OAEP and the hash is SHA-256.
-
-The data is the entry's content. 
-
-Tags:
-
-- Scheme: 0.1 // The Entry schema version
-- DataType: entry // The only data type now is entry
-- Date: entry date 
-  
+Refer to [this](Schema.md) for all the different versions.
