@@ -38,7 +38,7 @@ function onFileChange(e) {
     photoUrl.value = URL.createObjectURL(file);
 }
 
-const imageMaxSize = 200;
+const imageMaxSize = 500;
 
 // Read file, resize it and return the Base64 data URL in a promise
 function readAsDataURL(file) {

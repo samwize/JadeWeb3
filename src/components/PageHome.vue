@@ -13,7 +13,7 @@
         Concern over data privacy? Don't worry, your data is <b>fully encrypted</b> on the blockchain (including photos). Only your wallet private keys can decrypt the data.
     </p>
     <p class="mb-5 text-base text-gray-500 sm:text-lg dark:text-gray-400">
-        Note: Photos will be resized to no bigger than 100x100.
+        Note: Photos will be resized to no bigger than 500x500.
     </p>
     <h3 class="mb-3 text-3xl font-bold text-gray-900 dark:text-white">
         Get Started
