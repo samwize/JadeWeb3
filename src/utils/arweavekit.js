@@ -2,7 +2,11 @@ import Arweave from 'arweave';
 import { Entry, addPublished } from '/src/store.js'
 import { ref } from 'vue';
 
-const arweave = Arweave.init({});
+const arweave = Arweave.init({
+    host: 'arweave.net',
+    port: 443,
+    protocol: 'https'
+});
 
 export const address = ref(null);
 export const txnStatus = ref("");
