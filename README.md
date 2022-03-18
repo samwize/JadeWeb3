@@ -2,9 +2,11 @@
 
 This is a web3 app for Jade Journal, to store the journals on blockchain, permanently.
 
-Live forever, our legacy.
+👉🏻 Live app at https://jade2us.com/web3
 
-👉🏻 Live demo at https://jade2us.com/web3
+👉🏻 Recorded demo at https://youtu.be/aUUVVcK9mUw
+
+Live forever, our legacy.
 
 ## History of Jade
 

@@ -28,7 +28,7 @@ function test() {
 <template>
 <div class="container mx-auto">
     <a v-for="(entry, index) in store.published" :key="entry.date" class="flex flex-row my-6 items-center bg-white border hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
-        <img class="object-cover max-w-xs md:h-auto" :src="entry.firstPhoto" alt="">
+        <img class="object-cover w-2/12 md:h-auto" :src="entry.firstPhoto" alt="">
         <div class="flex flex-col text-left p-4 leading-normal">
             <p class="mb-2 font-normal text-gray-600 dark:text-gray-400">{{ entry.shortDate }}</p>
             <p class="text-xl font-light tracking-tight text-gray-900 dark:text-white">{{ entry.content }}</p>

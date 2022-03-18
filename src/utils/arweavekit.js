@@ -66,9 +66,13 @@ export async function publish(entry) {
     });
 }
 
-export async function decrypt(data) {
+export async function decrypt(data, schemaVersion) {
     return window.arweaveWallet.decrypt(data, encryptOptions).then(decryptedData => {
-        return Promise.resolve(JSON.parse(decryptedData));
+        if (schemaVersion == "0.1") {
+            return Promise.resolve(decryptedData);
+        } else {
+            return Promise.resolve(JSON.parse(decryptedData));
+        }
     });
 }
 
@@ -179,9 +183,13 @@ export async function fetchTransactions() {
                             default: break;
                         }
                     });
+                    
+                    if (entryDate == null) {
+                        entryDate = new Date('3/7/2022'); // Fix for the first published 
+                    }
                     console.log("entryDate", entryDate);
                     
-                    decrypt(txn.data).then( decryptedData => {
+                    decrypt(txn.data, schemaVersion).then( decryptedData => {
                         if (schemaVersion == "0.1") {
                             addPublished(txnId, new Entry(entryDate, decryptedData));
                         } else if (schemaVersion == "0.2") {
