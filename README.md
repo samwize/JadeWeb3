@@ -8,6 +8,10 @@ This is a web3 app for Jade Journal, to store the journals on blockchain, perman
 
 Live forever, our legacy.
 
+![Writing an entry](screenshot-1.jpg) 
+
+![Published entries](screenshot-2.jpg) 
+
 ## History of Jade
 
 Jade was released as an iPhone app in 2015, when I became a parent. I built the [iPhone app](https://jade2us.com) such that my wife and I can collaborate to write collectively for our newborn. Then handover when the kids can write on their own.
